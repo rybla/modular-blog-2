@@ -1,9 +1,18 @@
 package:
   name: modular-blog-2
   dependencies:
+    - argonaut
+    - argonaut-generic
+    - arrays
     - console
     - effect
+    - halogen
+    - lists
+    - maybe
+    - node-fs
     - prelude
+    - transformers
+    - tuples
   test:
     main: Test.Main
     dependencies: []

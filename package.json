@@ -2,7 +2,9 @@
   "name": "modular-blog-2",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "compile": "spago run -m Compile"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

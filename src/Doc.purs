@@ -2,10 +2,13 @@ module Doc where
 
 import Prelude
 
+import Control.Alternative (guard)
+import Control.Plus (empty)
 import Data.Argonaut (class DecodeJson, class EncodeJson)
 import Data.Argonaut.Decode.Generic (genericDecodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
+import Data.Maybe (Maybe)
 import Node.Path (FilePath)
 import Utility (bug)
 
@@ -111,9 +114,17 @@ makePageId :: String -> PageId
 makePageId str | isValidPageId str = PageId str
 makePageId str = bug $ "invalid PageId: " <> str
 
+makePageId' :: String -> Maybe PageId
+makePageId' str = do
+  guard $ isValidPageId str
+  pure $ PageId str
+
 isValidPageId :: String -> Boolean
 isValidPageId _str = true -- TODO: make sure is valid filename
 
 fromPageIdToJsonFilePath :: PageId -> FilePath
 fromPageIdToJsonFilePath (PageId str) = "./docs/pages/" <> str <> ".json"
+
+fromPageIdToJsonUrl :: PageId -> String
+fromPageIdToJsonUrl (PageId str) = "pages/" <> str <> ".json"
 

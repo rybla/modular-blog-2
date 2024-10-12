@@ -52,7 +52,11 @@ component = mkComponent { initialState, eval, render }
       []
       ( [ [ HH.div
               []
-              [ HH.slot_ (Proxy :: Proxy "abtract") unit ComponentDoc.component { doc: abstract } ]
+              [ HH.div
+                  []
+                  [ HH.text "abstract" ]
+              , HH.slot_ (Proxy :: Proxy "abstract") unit ComponentDoc.component { doc: abstract }
+              ]
           ]
         , kids # mapWithIndex \i doc -> HH.slot_ (Proxy :: Proxy "doc") i ComponentDoc.component { doc }
         ] # fold

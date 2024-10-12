@@ -10,16 +10,19 @@
             "arrays",
             "console",
             "effect",
+            "fetch",
             "halogen",
             "lists",
             "maybe",
             "node-fs",
             "prelude",
             "transformers",
-            "tuples"
+            "tuples",
+            "web-url"
           ],
           "build_plan": [
             "aff",
+            "ansi",
             "argonaut",
             "argonaut-codecs",
             "argonaut-core",
@@ -42,6 +45,7 @@
             "enums",
             "exceptions",
             "exists",
+            "fetch",
             "foldable-traversable",
             "foreign",
             "foreign-object",
@@ -54,15 +58,19 @@
             "halogen",
             "halogen-subscriptions",
             "halogen-vdom",
+            "http-methods",
             "identity",
             "integers",
             "invariant",
             "js-date",
+            "js-fetch",
             "js-promise",
+            "js-promise-aff",
             "lazy",
             "lists",
             "maybe",
             "media-types",
+            "mmorph",
             "newtype",
             "node-buffer",
             "node-event-emitter",
@@ -77,12 +85,14 @@
             "orders",
             "parallel",
             "partial",
+            "pipes",
             "prelude",
             "profunctor",
             "profunctor-lenses",
             "record",
             "refs",
             "safe-coerce",
+            "spec",
             "st",
             "strings",
             "tailrec",
@@ -100,8 +110,10 @@
             "web-html",
             "web-pointerevents",
             "web-storage",
+            "web-streams",
             "web-touchevents",
-            "web-uievents"
+            "web-uievents",
+            "web-url"
           ]
         },
         "test": {
@@ -651,6 +663,16 @@
         "unsafe-coerce"
       ]
     },
+    "ansi": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-ZMB6HD+q9CXvn9fRCmJ8dvuDrOVHcjombL3oNOerVnE=",
+      "dependencies": [
+        "foldable-traversable",
+        "lists",
+        "strings"
+      ]
+    },
     "argonaut": {
       "type": "registry",
       "version": "9.0.0",
@@ -926,6 +948,32 @@
         "unsafe-coerce"
       ]
     },
+    "fetch": {
+      "type": "registry",
+      "version": "4.1.0",
+      "integrity": "sha256-zCwBUkRL9n6nUhK1+7UqqsuxswPFATsZfGSBOA3NYYY=",
+      "dependencies": [
+        "aff",
+        "arraybuffer-types",
+        "bifunctors",
+        "effect",
+        "either",
+        "foreign",
+        "http-methods",
+        "js-fetch",
+        "js-promise",
+        "js-promise-aff",
+        "maybe",
+        "newtype",
+        "ordered-collections",
+        "prelude",
+        "record",
+        "strings",
+        "typelevel-prelude",
+        "web-file",
+        "web-streams"
+      ]
+    },
     "foldable-traversable": {
       "type": "registry",
       "version": "6.0.0",
@@ -1124,6 +1172,16 @@
         "web-html"
       ]
     },
+    "http-methods": {
+      "type": "registry",
+      "version": "6.0.0",
+      "integrity": "sha256-Orr7rbDGcp7qoqmUMXPRMjBx+C4jqOQcFe9+gE3nMgU=",
+      "dependencies": [
+        "either",
+        "prelude",
+        "strings"
+      ]
+    },
     "identity": {
       "type": "registry",
       "version": "6.0.0",
@@ -1167,6 +1225,31 @@
         "now"
       ]
     },
+    "js-fetch": {
+      "type": "registry",
+      "version": "0.2.1",
+      "integrity": "sha256-zQaVi9wFWku1SsWmdR11kRpOb+wxkNWR49cn928ucjw=",
+      "dependencies": [
+        "arraybuffer-types",
+        "arrays",
+        "effect",
+        "foldable-traversable",
+        "foreign",
+        "foreign-object",
+        "functions",
+        "http-methods",
+        "js-promise",
+        "maybe",
+        "newtype",
+        "prelude",
+        "record",
+        "tuples",
+        "typelevel-prelude",
+        "unfoldable",
+        "web-file",
+        "web-streams"
+      ]
+    },
     "js-promise": {
       "type": "registry",
       "version": "1.0.0",
@@ -1178,6 +1261,16 @@
         "functions",
         "maybe",
         "prelude"
+      ]
+    },
+    "js-promise-aff": {
+      "type": "registry",
+      "version": "1.0.0",
+      "integrity": "sha256-s9kml9Ei74hKlMMg41yyZp4GkbmYUwaH+gBWWrdhwec=",
+      "dependencies": [
+        "aff",
+        "foreign",
+        "js-promise"
       ]
     },
     "lazy": {
@@ -1228,6 +1321,16 @@
       "dependencies": [
         "newtype",
         "prelude"
+      ]
+    },
+    "mmorph": {
+      "type": "registry",
+      "version": "7.0.0",
+      "integrity": "sha256-urZlZNNqGeQFe5D/ClHlR8QgGBNHTMFPtJ5S5IpflTQ=",
+      "dependencies": [
+        "free",
+        "functors",
+        "transformers"
       ]
     },
     "newtype": {
@@ -1405,6 +1508,20 @@
       "integrity": "sha256-fwXerld6Xw1VkReh8yeQsdtLVrjfGiVuC5bA1Wyo/J4=",
       "dependencies": []
     },
+    "pipes": {
+      "type": "registry",
+      "version": "8.0.0",
+      "integrity": "sha256-kvfqGM4cPA/wCcBHbp5psouFw5dZGvku2462x7ZBwSY=",
+      "dependencies": [
+        "aff",
+        "lists",
+        "mmorph",
+        "prelude",
+        "tailrec",
+        "transformers",
+        "tuples"
+      ]
+    },
     "prelude": {
       "type": "registry",
       "version": "6.0.1",
@@ -1478,6 +1595,40 @@
       "integrity": "sha256-a1ibQkiUcbODbLE/WAq7Ttbbh9ex+x33VCQ7GngKudU=",
       "dependencies": [
         "unsafe-coerce"
+      ]
+    },
+    "spec": {
+      "type": "registry",
+      "version": "8.1.0",
+      "integrity": "sha256-kylPL0sBujW9w8yk+bguI92BiUuiyosPWyp/TTqPURw=",
+      "dependencies": [
+        "aff",
+        "ansi",
+        "arrays",
+        "avar",
+        "bifunctors",
+        "control",
+        "datetime",
+        "effect",
+        "either",
+        "exceptions",
+        "foldable-traversable",
+        "fork",
+        "identity",
+        "integers",
+        "lists",
+        "maybe",
+        "newtype",
+        "now",
+        "ordered-collections",
+        "parallel",
+        "pipes",
+        "prelude",
+        "refs",
+        "strings",
+        "tailrec",
+        "transformers",
+        "tuples"
       ]
     },
     "st": {
@@ -1672,6 +1823,20 @@
         "web-events"
       ]
     },
+    "web-streams": {
+      "type": "registry",
+      "version": "4.0.0",
+      "integrity": "sha256-02HgXIk6R+pU9fWOX42krukAI1QkCbLKcCv3b4Jq6WI=",
+      "dependencies": [
+        "arraybuffer-types",
+        "effect",
+        "exceptions",
+        "js-promise",
+        "nullable",
+        "prelude",
+        "tuples"
+      ]
+    },
     "web-touchevents": {
       "type": "registry",
       "version": "4.0.0",
@@ -1686,6 +1851,20 @@
       "integrity": "sha256-5I+ut9JYno3wowti3vJGs1afKCm1ucppKuy+zhuSyss=",
       "dependencies": [
         "web-html"
+      ]
+    },
+    "web-url": {
+      "type": "registry",
+      "version": "2.0.0",
+      "integrity": "sha256-isicTqg0+JZmIK+eD3kwQroOocufYDGZVNIx/wFw488=",
+      "dependencies": [
+        "aff",
+        "effect",
+        "maybe",
+        "partial",
+        "prelude",
+        "spec",
+        "tuples"
       ]
     }
   }

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "compile": "spago run -m Compile"
+    "compile": "spago run -m Compile",
+    "bundle": "spago bundle --module ComponentIndex --outfile ./docs/index.js",
+    "start": "pnpm bundle && pnpx http-server ./docs"
   },
   "keywords": [],
   "author": "",

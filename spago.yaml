@@ -6,6 +6,7 @@ package:
     - arrays
     - console
     - effect
+    - fetch
     - halogen
     - lists
     - maybe
@@ -13,6 +14,7 @@ package:
     - prelude
     - transformers
     - tuples
+    - web-url
   test:
     main: Test.Main
     dependencies: []

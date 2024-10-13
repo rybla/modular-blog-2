@@ -3,7 +3,9 @@ module ComponentDoc where
 import Doc
 import Prelude
 
+import Control.Plus (empty)
 import Data.Foldable (fold, intercalate)
+import Data.Maybe (maybe)
 import Effect.Aff (Aff)
 import Halogen (Component, defaultEval, mkComponent, mkEval)
 import Halogen.HTML as HH
@@ -71,4 +73,23 @@ renderDoc (Group group) =
           )
       ]
       (group.kids # map renderDoc # fold)
+  ]
+renderDoc (ExternalLink link) =
+  [ HH.div
+      []
+      ( [ link.mb_icon_src # maybe mempty \icon_src ->
+            [ HH.img
+                [ HP.src icon_src
+                , HP.width 20
+                , HP.height 20
+                ]
+            ]
+        , link.mb_abstract # maybe mempty \abstract ->
+            renderDoc (String abstract)
+        , [ HH.a
+              [ HP.href link.href ]
+              (link.mb_label # maybe [ HH.text link.href ] renderDoc)
+          ]
+        ] # fold
+      )
   ]

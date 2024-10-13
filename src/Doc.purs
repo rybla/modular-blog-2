@@ -2,14 +2,17 @@ module Doc where
 
 import Prelude
 
-import Control.Alternative (guard)
+import Control.Alternative (empty, guard)
 import Control.Plus (empty)
 import Data.Argonaut (class DecodeJson, class EncodeJson)
 import Data.Argonaut.Decode.Generic (genericDecodeJson)
 import Data.Argonaut.Encode.Generic (genericEncodeJson)
 import Data.Generic.Rep (class Generic)
-import Data.Maybe (Maybe)
+import Data.Maybe (Maybe(..))
+import Data.Nullable as Nullable
+import Effect.Aff (Aff)
 import Node.Path (FilePath)
+import Tools.Readability (getFaviconUrlFromUrl, loadReadabilityArticleFromUrl)
 import Utility (bug)
 
 --------------------------------------------------------------------------------
@@ -36,6 +39,7 @@ instance DecodeJson Page where
 data Doc
   = String String
   | Group Group
+  | ExternalLink ExternalLink
 
 derive instance Generic Doc _
 
@@ -76,6 +80,17 @@ instance EncodeJson DocQuery where
 
 instance DecodeJson DocQuery where
   decodeJson x = genericDecodeJson x
+
+--------------------------------------------------------------------------------
+-- ExternalLink
+--------------------------------------------------------------------------------
+
+type ExternalLink =
+  { href :: String
+  , mb_label :: Maybe Doc
+  , mb_abstract :: Maybe String
+  , mb_icon_src :: Maybe String
+  }
 
 --------------------------------------------------------------------------------
 -- DocId 

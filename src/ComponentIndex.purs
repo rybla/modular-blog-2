@@ -6,7 +6,7 @@ import ComponentPage as ComponentPage
 import Data.Argonaut.Decode (fromJsonString, printJsonDecodeError)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe')
-import Doc (Page(..), PageId(..), fromPageIdToJsonUrl, fromPageIdToString, makePageId')
+import Doc (Page, PageId(..), fromPageIdToJsonUrl, fromPageIdToString, makePageId')
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Fetch (Method(..), fetch)

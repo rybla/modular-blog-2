@@ -3,7 +3,9 @@ module Compile where
 import Prelude
 
 import Data.Argonaut.Encode (toJsonString)
+import Data.Array as Array
 import Data.FoldableWithIndex (traverseWithIndex_)
+import Data.Map as Map
 import Doc (fromDocIdToJsonFilePath, fromPageIdToJsonFilePath)
 import Docs (docs)
 import Effect (Effect)
@@ -15,6 +17,8 @@ import Pages (pages)
 
 main :: Effect Unit
 main = launchAff_ do
+  let pageIds = pages # Map.keys # Array.fromFoldable
+  writeTextFile UTF8 "./docs/pageIds.json" (toJsonString pageIds)
   compilePages
   compileDocs
   pure unit

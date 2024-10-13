@@ -95,6 +95,14 @@
   var map = function(dict) {
     return dict.map;
   };
+  var mapFlipped = function(dictFunctor) {
+    var map111 = map(dictFunctor);
+    return function(fa) {
+      return function(f) {
+        return map111(f)(fa);
+      };
+    };
+  };
   var $$void = function(dictFunctor) {
     return map(dictFunctor)($$const(unit));
   };
@@ -2038,6 +2046,7 @@
   var toArray = /* @__PURE__ */ toJsonType(caseJsonArray);
 
   // output/Data.Argonaut.Decode.Error/index.js
+  var show2 = /* @__PURE__ */ show(showString);
   var show1 = /* @__PURE__ */ show(showInt);
   var TypeMismatch = /* @__PURE__ */ function() {
     function TypeMismatch3(value0) {
@@ -2105,6 +2114,35 @@
     MissingValue2.value = new MissingValue2();
     return MissingValue2;
   }();
+  var showJsonDecodeError = {
+    show: function(v) {
+      if (v instanceof TypeMismatch) {
+        return "(TypeMismatch " + (show2(v.value0) + ")");
+      }
+      ;
+      if (v instanceof UnexpectedValue) {
+        return "(UnexpectedValue " + (stringify(v.value0) + ")");
+      }
+      ;
+      if (v instanceof AtIndex) {
+        return "(AtIndex " + (show1(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof AtKey) {
+        return "(AtKey " + (show2(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof Named) {
+        return "(Named " + (show2(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof MissingValue) {
+        return "MissingValue";
+      }
+      ;
+      throw new Error("Failed pattern match at Data.Argonaut.Decode.Error (line 24, column 10 - line 30, column 35): " + [v.constructor.name]);
+    }
+  };
   var printJsonDecodeError = function(err) {
     var go2 = function(v) {
       if (v instanceof TypeMismatch) {
@@ -3299,6 +3337,16 @@
       return "kids";
     }
   };
+  var PageIsSymbol = {
+    reflectSymbol: function() {
+      return "Page";
+    }
+  };
+  var abstractIsSymbol = {
+    reflectSymbol: function() {
+      return "abstract";
+    }
+  };
   var decodeRepSum2 = /* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorArg(StringIsSymbol)(decodeJsonString));
   var decodeRepConstructorArg2 = /* @__PURE__ */ decodeRepConstructorArg(GroupIsSymbol);
   var discard3 = /* @__PURE__ */ discard(discardUnit)(bindMaybe);
@@ -3338,7 +3386,25 @@
     };
     return Group2;
   }();
+  var Page = /* @__PURE__ */ function() {
+    function Page2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    Page2.create = function(value0) {
+      return new Page2(value0);
+    };
+    return Page2;
+  }();
   var showPageId = showString;
+  var genericPage_ = {
+    to: function(x) {
+      return new Page(x);
+    },
+    from: function(x) {
+      return x.value0;
+    }
+  };
   var genericGroupStyle_ = {
     to: function(x) {
       if (x instanceof Inl) {
@@ -3349,7 +3415,7 @@
         return Row.value;
       }
       ;
-      throw new Error("Failed pattern match at Doc (line 41, column 1 - line 41, column 37): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at Doc (line 58, column 1 - line 58, column 37): " + [x.constructor.name]);
     },
     from: function(x) {
       if (x instanceof Column) {
@@ -3360,10 +3426,10 @@
         return new Inr(NoArguments.value);
       }
       ;
-      throw new Error("Failed pattern match at Doc (line 41, column 1 - line 41, column 37): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at Doc (line 58, column 1 - line 58, column 37): " + [x.constructor.name]);
     }
   };
-  var genericDecodeJson1 = /* @__PURE__ */ genericDecodeJson(genericGroupStyle_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(ColumnIsSymbol))(/* @__PURE__ */ decodeRepConstructorNoArgs(RowIsSymbol)));
+  var genericDecodeJson2 = /* @__PURE__ */ genericDecodeJson(genericGroupStyle_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(ColumnIsSymbol))(/* @__PURE__ */ decodeRepConstructorNoArgs(RowIsSymbol)));
   var genericDoc_ = {
     to: function(x) {
       if (x instanceof Inl) {
@@ -3374,7 +3440,7 @@
         return new Group(x.value0);
       }
       ;
-      throw new Error("Failed pattern match at Doc (line 23, column 1 - line 23, column 30): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at Doc (line 40, column 1 - line 40, column 30): " + [x.constructor.name]);
     },
     from: function(x) {
       if (x instanceof $$String) {
@@ -3385,19 +3451,26 @@
         return new Inr(x.value0);
       }
       ;
-      throw new Error("Failed pattern match at Doc (line 23, column 1 - line 23, column 30): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at Doc (line 40, column 1 - line 40, column 30): " + [x.constructor.name]);
     }
   };
-  var genericDecodeJson2 = /* @__PURE__ */ genericDecodeJson(genericDoc_);
+  var genericDecodeJson1 = /* @__PURE__ */ genericDecodeJson(genericDoc_);
+  var decodeJsonPageId = decodeJsonString;
   var decodeJsonGroupStyle = {
     decodeJson: function(x) {
-      return genericDecodeJson1(x);
+      return genericDecodeJson2(x);
     }
   };
   var gDecodeJsonCons2 = /* @__PURE__ */ gDecodeJsonCons(/* @__PURE__ */ decodeFieldId(decodeJsonGroupStyle))(gDecodeJsonNil)(styleIsSymbol)()();
   var decodeJsonDoc = {
     decodeJson: function(x) {
-      return genericDecodeJson2(decodeRepSum2(decodeRepConstructorArg2(decodeRecord(gDecodeJsonCons(decodeFieldId(decodeArray2(decodeJsonDoc)))(gDecodeJsonCons2)(kidsIsSymbol)()())())))(x);
+      return genericDecodeJson1(decodeRepSum2(decodeRepConstructorArg2(decodeRecord(gDecodeJsonCons(decodeFieldId(decodeArray2(decodeJsonDoc)))(gDecodeJsonCons2)(kidsIsSymbol)()())())))(x);
+    }
+  };
+  var genericDecodeJson3 = /* @__PURE__ */ genericDecodeJson(genericPage_)(/* @__PURE__ */ decodeRepConstructorArg(PageIsSymbol)(/* @__PURE__ */ decodeRecord(/* @__PURE__ */ gDecodeJsonCons(/* @__PURE__ */ decodeFieldId(decodeJsonDoc))(/* @__PURE__ */ gDecodeJsonCons(/* @__PURE__ */ decodeFieldId(/* @__PURE__ */ decodeArray2(decodeJsonDoc)))(gDecodeJsonNil)(kidsIsSymbol)()())(abstractIsSymbol)()())()));
+  var decodeJsonPage = {
+    decodeJson: function(x) {
+      return genericDecodeJson3(x);
     }
   };
   var isValidPageId = function(_str) {
@@ -3407,6 +3480,9 @@
     return discard3(guard2(isValidPageId(str)))(function() {
       return pure3(str);
     });
+  };
+  var fromPageIdToString = function(v) {
+    return v;
   };
   var fromPageIdToJsonUrl = function(v) {
     return "pages/" + (v + ".json");
@@ -4612,6 +4688,7 @@
     ;
     throw new Error("Failed pattern match at Halogen.VDom.DOM.Prop (line 182, column 16 - line 187, column 16): " + [v.constructor.name]);
   };
+  var propFromString = unsafeCoerce2;
   var buildProp = function(emit) {
     return function(el) {
       var removeProp = function(prevEvents) {
@@ -4768,8 +4845,23 @@
   var widget = function($28) {
     return HTML(Widget.create($28));
   };
+  var toPropValue = function(dict) {
+    return dict.toPropValue;
+  };
   var text = function($29) {
     return HTML(Text.create($29));
+  };
+  var prop = function(dictIsProp) {
+    var toPropValue1 = toPropValue(dictIsProp);
+    return function(v) {
+      var $31 = Property.create(v);
+      return function($32) {
+        return $31(toPropValue1($32));
+      };
+    };
+  };
+  var isPropString = {
+    toPropValue: propFromString
   };
   var element = function(ns) {
     return function(name15) {
@@ -7030,9 +7122,17 @@
   var element2 = /* @__PURE__ */ function() {
     return element(Nothing.value);
   }();
+  var h1 = /* @__PURE__ */ element2("h1");
+  var h1_ = /* @__PURE__ */ h1([]);
   var div2 = /* @__PURE__ */ element2("div");
+  var a = /* @__PURE__ */ element2("a");
 
   // output/Halogen.HTML.Properties/index.js
+  var prop2 = function(dictIsProp) {
+    return prop(dictIsProp);
+  };
+  var prop22 = /* @__PURE__ */ prop2(isPropString);
+  var href = /* @__PURE__ */ prop22("href");
   var attr2 = /* @__PURE__ */ function() {
     return attr(Nothing.value);
   }();
@@ -7423,7 +7523,7 @@
   };
 
   // output/Fetch.Internal.Request/index.js
-  var show2 = /* @__PURE__ */ show(showMethod);
+  var show3 = /* @__PURE__ */ show(showMethod);
   var toCoreRequestOptionsHelpe = {
     convertHelper: function(v) {
       return function(v1) {
@@ -7433,7 +7533,7 @@
   };
   var toCoreRequestOptionsConve9 = {
     convertImpl: function(v) {
-      return show2;
+      return show3;
     }
   };
   var $$new2 = function() {
@@ -8775,47 +8875,6 @@
     };
   };
 
-  // output/Page/index.js
-  var PageIsSymbol = {
-    reflectSymbol: function() {
-      return "Page";
-    }
-  };
-  var kidsIsSymbol2 = {
-    reflectSymbol: function() {
-      return "kids";
-    }
-  };
-  var abstractIsSymbol = {
-    reflectSymbol: function() {
-      return "abstract";
-    }
-  };
-  var Page = /* @__PURE__ */ function() {
-    function Page2(value0) {
-      this.value0 = value0;
-    }
-    ;
-    Page2.create = function(value0) {
-      return new Page2(value0);
-    };
-    return Page2;
-  }();
-  var genericPage_ = {
-    to: function(x) {
-      return new Page(x);
-    },
-    from: function(x) {
-      return x.value0;
-    }
-  };
-  var genericDecodeJson3 = /* @__PURE__ */ genericDecodeJson(genericPage_)(/* @__PURE__ */ decodeRepConstructorArg(PageIsSymbol)(/* @__PURE__ */ decodeRecord(/* @__PURE__ */ gDecodeJsonCons(/* @__PURE__ */ decodeFieldId(decodeJsonDoc))(/* @__PURE__ */ gDecodeJsonCons(/* @__PURE__ */ decodeFieldId(/* @__PURE__ */ decodeArray2(decodeJsonDoc)))(gDecodeJsonNil)(kidsIsSymbol2)()())(abstractIsSymbol)()())()));
-  var decodeJsonPage = {
-    decodeJson: function(x) {
-      return genericDecodeJson3(x);
-    }
-  };
-
   // output/Web.DOM.Document/foreign.js
   var getEffProp3 = function(name15) {
     return function(doc) {
@@ -8875,8 +8934,9 @@
   }();
 
   // output/ComponentIndex/index.js
-  var show3 = /* @__PURE__ */ show(showString);
-  var show12 = /* @__PURE__ */ show(showPageId);
+  var mapFlipped2 = /* @__PURE__ */ mapFlipped(functorArray);
+  var show4 = /* @__PURE__ */ show(showPageId);
+  var show12 = /* @__PURE__ */ show(showString);
   var slot_3 = /* @__PURE__ */ slot_()({
     reflectSymbol: function() {
       return "page";
@@ -8885,21 +8945,33 @@
   var bind9 = /* @__PURE__ */ bind(bindHalogenM);
   var liftEffect9 = /* @__PURE__ */ liftEffect(/* @__PURE__ */ monadEffectHalogenM(monadEffectAff));
   var discard7 = /* @__PURE__ */ discard(discardUnit)(bindHalogenM);
-  var pure11 = /* @__PURE__ */ pure(applicativeHalogenM);
   var liftAff2 = /* @__PURE__ */ liftAff(/* @__PURE__ */ monadAffHalogenM(monadAffAff));
   var fetch3 = /* @__PURE__ */ fetch2()()(/* @__PURE__ */ toCoreRequestOptionsRowRo()()(/* @__PURE__ */ toCoreRequestOptionsHelpe1(toCoreRequestOptionsConve9)()()()({
     reflectSymbol: function() {
       return "method";
     }
   })(toCoreRequestOptionsHelpe)()()));
-  var fromJsonString2 = /* @__PURE__ */ fromJsonString(decodeJsonPage);
   var modify_3 = /* @__PURE__ */ modify_2(monadStateHalogenM);
+  var fromJsonString2 = /* @__PURE__ */ fromJsonString(/* @__PURE__ */ decodeArray2(decodeJsonPageId));
+  var show22 = /* @__PURE__ */ show(showJsonDecodeError);
+  var fromJsonString1 = /* @__PURE__ */ fromJsonString(decodeJsonPage);
+  var pure11 = /* @__PURE__ */ pure(applicativeHalogenM);
   var Blank = /* @__PURE__ */ function() {
     function Blank2() {
     }
     ;
     Blank2.value = new Blank2();
     return Blank2;
+  }();
+  var Archive = /* @__PURE__ */ function() {
+    function Archive2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    Archive2.create = function(value0) {
+      return new Archive2(value0);
+    };
+    return Archive2;
   }();
   var InvalidPageId = /* @__PURE__ */ function() {
     function InvalidPageId2(value0) {
@@ -8932,14 +9004,27 @@
     return InvalidPageJson2;
   }();
   var ValidPage = /* @__PURE__ */ function() {
-    function ValidPage2(value0) {
+    function ValidPage2(value0, value1) {
       this.value0 = value0;
+      this.value1 = value1;
     }
     ;
     ValidPage2.create = function(value0) {
-      return new ValidPage2(value0);
+      return function(value1) {
+        return new ValidPage2(value0, value1);
+      };
     };
     return ValidPage2;
+  }();
+  var MiscError = /* @__PURE__ */ function() {
+    function MiscError2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    MiscError2.create = function(value0) {
+      return new MiscError2(value0);
+    };
+    return MiscError2;
   }();
   var Initialize2 = /* @__PURE__ */ function() {
     function Initialize3() {
@@ -8952,28 +9037,38 @@
     var render = function(v) {
       return div2([])(function() {
         if (v.status instanceof Blank) {
-          return [div2([])([text("<Blank>")])];
+          return [h1_([text("Blank")])];
+        }
+        ;
+        if (v.status instanceof Archive) {
+          return [h1_([text("Archive")]), div2([])(mapFlipped2(v.status.value0)(function(v1) {
+            return a([href("?pageId=" + v1)])([text(show4(v1))]);
+          }))];
         }
         ;
         if (v.status instanceof InvalidPageId) {
-          return [div2([])([text("invalid PageId: " + show3(v.status.value0))])];
+          return [h1_([text("Error")]), div2([])([text("invalid PageId: " + show12(v.status.value0))])];
         }
         ;
         if (v.status instanceof UnknownPageId) {
-          return [div2([])([text("unknown PageId: " + show12(v.status.value0))])];
+          return [h1_([text("Error")]), div2([])([text("unknown PageId: " + show4(v.status.value0))])];
         }
         ;
         if (v.status instanceof InvalidPageJson) {
-          return [];
+          return [div2([])([h1_([text("Error")]), text("invalid Page JSON: " + v.status.value0)])];
+        }
+        ;
+        if (v.status instanceof MiscError) {
+          return [h1_([text("Error")]), div2([])([text("miscellaneous error: " + v.status.value0)])];
         }
         ;
         if (v.status instanceof ValidPage) {
-          return [slot_3($$Proxy.value)(unit)(component2)({
-            page: v.status.value0
+          return [h1_([text(fromPageIdToString(v.status.value0))]), slot_3($$Proxy.value)(unit)(component2)({
+            page: v.status.value1
           })];
         }
         ;
-        throw new Error("Failed pattern match at ComponentIndex (line 100, column 9 - line 105, column 103): " + [v.status.constructor.name]);
+        throw new Error("Failed pattern match at ComponentIndex (line 104, column 9 - line 135, column 14): " + [v.status.constructor.name]);
       }());
     };
     var initialState = function(v) {
@@ -8999,75 +9094,140 @@
           return discard7(function() {
             var v2 = get3("pageId")(sp);
             if (v2 instanceof Nothing) {
-              return pure11(unit);
+              return bind9(liftAff2(fetch3("pageIds.json")({
+                method: GET2.value
+              })))(function(response) {
+                var $70 = !response.ok;
+                if ($70) {
+                  return modify_3(function(v32) {
+                    var $71 = {};
+                    for (var $72 in v32) {
+                      if ({}.hasOwnProperty.call(v32, $72)) {
+                        $71[$72] = v32[$72];
+                      }
+                      ;
+                    }
+                    ;
+                    $71.status = new MiscError("can't find pages.json");
+                    return $71;
+                  });
+                }
+                ;
+                return bind9(liftAff2(response.text))(function(pageIds_str) {
+                  var v32 = fromJsonString2(pageIds_str);
+                  if (v32 instanceof Left) {
+                    return modify_3(function(v4) {
+                      var $75 = {};
+                      for (var $76 in v4) {
+                        if ({}.hasOwnProperty.call(v4, $76)) {
+                          $75[$76] = v4[$76];
+                        }
+                        ;
+                      }
+                      ;
+                      $75.status = new MiscError("error when decoding pageIds.json: " + show22(v32.value0));
+                      return $75;
+                    });
+                  }
+                  ;
+                  if (v32 instanceof Right) {
+                    return modify_3(function(v4) {
+                      var $79 = {};
+                      for (var $80 in v4) {
+                        if ({}.hasOwnProperty.call(v4, $80)) {
+                          $79[$80] = v4[$80];
+                        }
+                        ;
+                      }
+                      ;
+                      $79.status = new Archive(v32.value0);
+                      return $79;
+                    });
+                  }
+                  ;
+                  throw new Error("Failed pattern match at ComponentIndex (line 85, column 17 - line 87, column 74): " + [v32.constructor.name]);
+                });
+              });
             }
             ;
             if (v2 instanceof Just) {
               var v3 = makePageId$prime(v2.value0);
               if (v3 instanceof Nothing) {
-                return pure11(unit);
+                return modify_3(function(v4) {
+                  var $84 = {};
+                  for (var $85 in v4) {
+                    if ({}.hasOwnProperty.call(v4, $85)) {
+                      $84[$85] = v4[$85];
+                    }
+                    ;
+                  }
+                  ;
+                  $84.status = new InvalidPageId(v2.value0);
+                  return $84;
+                });
               }
               ;
               if (v3 instanceof Just) {
                 return bind9(liftAff2(fetch3(fromPageIdToJsonUrl(v3.value0))({
                   method: GET2.value
                 })))(function(response) {
-                  if (response.ok) {
-                    return bind9(liftAff2(response.text))(function(page_str) {
-                      var v4 = fromJsonString2(page_str);
-                      if (v4 instanceof Left) {
-                        return modify_3(function(v5) {
-                          var $58 = {};
-                          for (var $59 in v5) {
-                            if ({}.hasOwnProperty.call(v5, $59)) {
-                              $58[$59] = v5[$59];
-                            }
-                            ;
-                          }
-                          ;
-                          $58.status = new InvalidPageJson(printJsonDecodeError(v4.value0));
-                          return $58;
-                        });
+                  var $87 = !response.ok;
+                  if ($87) {
+                    return modify_3(function(v4) {
+                      var $88 = {};
+                      for (var $89 in v4) {
+                        if ({}.hasOwnProperty.call(v4, $89)) {
+                          $88[$89] = v4[$89];
+                        }
+                        ;
                       }
                       ;
-                      if (v4 instanceof Right) {
-                        return modify_3(function(v5) {
-                          var $62 = {};
-                          for (var $63 in v5) {
-                            if ({}.hasOwnProperty.call(v5, $63)) {
-                              $62[$63] = v5[$63];
-                            }
-                            ;
-                          }
-                          ;
-                          $62.status = new ValidPage(v4.value0);
-                          return $62;
-                        });
-                      }
-                      ;
-                      throw new Error("Failed pattern match at ComponentIndex (line 89, column 19 - line 91, column 72): " + [v4.constructor.name]);
+                      $88.status = new UnknownPageId(v3.value0);
+                      return $88;
                     });
                   }
                   ;
-                  return modify_3(function(v4) {
-                    var $66 = {};
-                    for (var $67 in v4) {
-                      if ({}.hasOwnProperty.call(v4, $67)) {
-                        $66[$67] = v4[$67];
-                      }
-                      ;
+                  return bind9(liftAff2(response.text))(function(page_str) {
+                    var v4 = fromJsonString1(page_str);
+                    if (v4 instanceof Left) {
+                      return modify_3(function(v5) {
+                        var $92 = {};
+                        for (var $93 in v5) {
+                          if ({}.hasOwnProperty.call(v5, $93)) {
+                            $92[$93] = v5[$93];
+                          }
+                          ;
+                        }
+                        ;
+                        $92.status = new InvalidPageJson(printJsonDecodeError(v4.value0));
+                        return $92;
+                      });
                     }
                     ;
-                    $66.status = new UnknownPageId(v3.value0);
-                    return $66;
+                    if (v4 instanceof Right) {
+                      return modify_3(function(v5) {
+                        var $96 = {};
+                        for (var $97 in v5) {
+                          if ({}.hasOwnProperty.call(v5, $97)) {
+                            $96[$97] = v5[$97];
+                          }
+                          ;
+                        }
+                        ;
+                        $96.status = new ValidPage(v3.value0, v4.value0);
+                        return $96;
+                      });
+                    }
+                    ;
+                    throw new Error("Failed pattern match at ComponentIndex (line 95, column 19 - line 97, column 79): " + [v4.constructor.name]);
                   });
                 });
               }
               ;
-              throw new Error("Failed pattern match at ComponentIndex (line 83, column 32 - line 93, column 62): " + [v3.constructor.name]);
+              throw new Error("Failed pattern match at ComponentIndex (line 88, column 32 - line 97, column 79): " + [v3.constructor.name]);
             }
             ;
-            throw new Error("Failed pattern match at ComponentIndex (line 81, column 11 - line 93, column 62): " + [v2.constructor.name]);
+            throw new Error("Failed pattern match at ComponentIndex (line 79, column 11 - line 97, column 79): " + [v2.constructor.name]);
           }())(function() {
             return pure11(unit);
           });

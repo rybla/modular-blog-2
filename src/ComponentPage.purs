@@ -1,7 +1,6 @@
 module ComponentPage where
 
 import Doc
-import Page
 import Prelude
 
 import ComponentDoc as ComponentDoc

@@ -13,6 +13,23 @@ import Node.Path (FilePath)
 import Utility (bug)
 
 --------------------------------------------------------------------------------
+-- Page
+--------------------------------------------------------------------------------
+
+data Page = Page
+  { abstract :: Doc
+  , kids :: Array Doc
+  }
+
+derive instance Generic Page _
+
+instance EncodeJson Page where
+  encodeJson x = genericEncodeJson x
+
+instance DecodeJson Page where
+  decodeJson x = genericDecodeJson x
+
+--------------------------------------------------------------------------------
 -- Doc
 --------------------------------------------------------------------------------
 
@@ -66,19 +83,15 @@ instance DecodeJson DocQuery where
 
 newtype DocId = DocId String
 
-derive instance Generic DocId _
-
 derive newtype instance Show DocId
 
 derive newtype instance Eq DocId
 
 derive newtype instance Ord DocId
 
-instance EncodeJson DocId where
-  encodeJson x = genericEncodeJson x
+derive newtype instance EncodeJson DocId
 
-instance DecodeJson DocId where
-  decodeJson x = genericDecodeJson x
+derive newtype instance DecodeJson DocId
 
 makeDocId :: String -> DocId
 makeDocId str | isValidDocId str = DocId str
@@ -90,13 +103,14 @@ isValidDocId _str = true -- TODO: make sure is valid filename
 fromDocIdToJsonFilePath :: DocId -> FilePath
 fromDocIdToJsonFilePath (DocId str) = "./docs/docs/" <> str <> ".json"
 
+fromDocIdToString :: DocId -> String
+fromDocIdToString (DocId pageId_str) = pageId_str
+
 --------------------------------------------------------------------------------
 -- PageId
 --------------------------------------------------------------------------------
 
 newtype PageId = PageId String
-
-derive instance Generic PageId _
 
 derive newtype instance Show PageId
 
@@ -104,11 +118,9 @@ derive newtype instance Eq PageId
 
 derive newtype instance Ord PageId
 
-instance EncodeJson PageId where
-  encodeJson x = genericEncodeJson x
+derive newtype instance EncodeJson PageId
 
-instance DecodeJson PageId where
-  decodeJson x = genericDecodeJson x
+derive newtype instance DecodeJson PageId
 
 makePageId :: String -> PageId
 makePageId str | isValidPageId str = PageId str
@@ -128,3 +140,5 @@ fromPageIdToJsonFilePath (PageId str) = "./docs/pages/" <> str <> ".json"
 fromPageIdToJsonUrl :: PageId -> String
 fromPageIdToJsonUrl (PageId str) = "pages/" <> str <> ".json"
 
+fromPageIdToString :: PageId -> String
+fromPageIdToString (PageId pageId_str) = pageId_str

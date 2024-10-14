@@ -1,0 +1,15 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+.content.archive {
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}

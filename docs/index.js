@@ -154,26 +154,26 @@
   var unsafeSet = function(label5) {
     return function(value12) {
       return function(rec) {
-        var copy = {};
+        var copy2 = {};
         for (var key in rec) {
           if ({}.hasOwnProperty.call(rec, key)) {
-            copy[key] = rec[key];
+            copy2[key] = rec[key];
           }
         }
-        copy[label5] = value12;
-        return copy;
+        copy2[label5] = value12;
+        return copy2;
       };
     };
   };
   var unsafeDelete = function(label5) {
     return function(rec) {
-      var copy = {};
+      var copy2 = {};
       for (var key in rec) {
         if (key !== label5 && {}.hasOwnProperty.call(rec, key)) {
-          copy[key] = rec[key];
+          copy2[key] = rec[key];
         }
       }
-      return copy;
+      return copy2;
     };
   };
 
@@ -527,6 +527,9 @@
   };
   var to = function(dict) {
     return dict.to;
+  };
+  var from = function(dict) {
+    return dict.from;
   };
 
   // output/Data.Maybe/index.js
@@ -1019,6 +1022,9 @@
 
   // output/Data.Newtype/index.js
   var coerce2 = /* @__PURE__ */ coerce();
+  var wrap = function() {
+    return coerce2;
+  };
   var unwrap = function() {
     return coerce2;
   };
@@ -1052,7 +1058,7 @@
   var intercalate = function(dictFoldable) {
     var foldl2 = foldl(dictFoldable);
     return function(dictMonoid) {
-      var append5 = append(dictMonoid.Semigroup0());
+      var append6 = append(dictMonoid.Semigroup0());
       var mempty4 = mempty(dictMonoid);
       return function(sep) {
         return function(xs) {
@@ -1067,7 +1073,7 @@
               ;
               return {
                 init: false,
-                acc: append5(v.acc)(append5(sep)(v1))
+                acc: append6(v.acc)(append6(sep)(v1))
               };
             };
           };
@@ -1130,12 +1136,12 @@
   var foldMapDefaultR = function(dictFoldable) {
     var foldr22 = foldr(dictFoldable);
     return function(dictMonoid) {
-      var append5 = append(dictMonoid.Semigroup0());
+      var append6 = append(dictMonoid.Semigroup0());
       var mempty4 = mempty(dictMonoid);
       return function(f) {
         return foldr22(function(x) {
           return function(acc) {
-            return append5(f(x))(acc);
+            return append6(f(x))(acc);
           };
         })(mempty4);
       };
@@ -1901,13 +1907,13 @@
   var foldMapWithIndexDefaultR = function(dictFoldableWithIndex) {
     var foldrWithIndex1 = foldrWithIndex(dictFoldableWithIndex);
     return function(dictMonoid) {
-      var append5 = append(dictMonoid.Semigroup0());
+      var append6 = append(dictMonoid.Semigroup0());
       var mempty4 = mempty(dictMonoid);
       return function(f) {
         return foldrWithIndex1(function(i2) {
           return function(x) {
             return function(acc) {
-              return append5(f(i2)(x))(acc);
+              return append6(f(i2)(x))(acc);
             };
           };
         })(mempty4);
@@ -2984,6 +2990,11 @@
   // output/Data.String.Common/foreign.js
   var toLower = function(s) {
     return s.toLowerCase();
+  };
+  var joinWith = function(s) {
+    return function(xs) {
+      return xs.join(s);
+    };
   };
 
   // output/Data.Argonaut.Decode.Decoders/index.js
@@ -4626,9 +4637,9 @@
   function addEventListener2(type) {
     return function(listener) {
       return function(useCapture) {
-        return function(target5) {
+        return function(target6) {
           return function() {
-            return target5.addEventListener(type, listener, useCapture);
+            return target6.addEventListener(type, listener, useCapture);
           };
         };
       };
@@ -4637,9 +4648,9 @@
   function removeEventListener2(type) {
     return function(listener) {
       return function(useCapture) {
-        return function(target5) {
+        return function(target6) {
           return function() {
-            return target5.removeEventListener(type, listener, useCapture);
+            return target6.removeEventListener(type, listener, useCapture);
           };
         };
       };
@@ -4794,8 +4805,8 @@
           }
           ;
           if (v1 instanceof Handler) {
-            var handler2 = unsafeLookup(v1.value0, prevEvents);
-            return removeEventListener(v1.value0, fst(handler2), el);
+            var handler3 = unsafeLookup(v1.value0, prevEvents);
+            return removeEventListener(v1.value0, fst(handler3), el);
           }
           ;
           if (v1 instanceof Ref) {
@@ -4854,9 +4865,9 @@
           }
           ;
           if (v11 instanceof Handler && v2 instanceof Handler) {
-            var handler2 = unsafeLookup(v2.value0, prevEvents);
-            write(v2.value1)(snd(handler2))();
-            pokeMutMap(v2.value0, handler2, events);
+            var handler3 = unsafeLookup(v2.value0, prevEvents);
+            write(v2.value1)(snd(handler3))();
+            pokeMutMap(v2.value0, handler3, events);
             return v2;
           }
           ;
@@ -4958,6 +4969,9 @@
   var isPropInt = {
     toPropValue: propFromInt
   };
+  var handler = /* @__PURE__ */ function() {
+    return Handler.create;
+  }();
   var element = function(ns) {
     return function(name15) {
       return function(props) {
@@ -5588,30 +5602,30 @@
       fn.tag = tag;
       return fn;
     }
-    function nonCanceler2(error3) {
+    function nonCanceler2(error4) {
       return new Aff2(PURE, void 0);
     }
     function runEff(eff) {
       try {
         eff();
-      } catch (error3) {
+      } catch (error4) {
         setTimeout(function() {
-          throw error3;
+          throw error4;
         }, 0);
       }
     }
     function runSync(left, right, eff) {
       try {
         return right(eff());
-      } catch (error3) {
-        return left(error3);
+      } catch (error4) {
+        return left(error4);
       }
     }
     function runAsync(left, eff, k) {
       try {
         return eff(k)();
-      } catch (error3) {
-        k(left(error3))();
+      } catch (error4) {
+        k(left(error4))();
         return nonCanceler2;
       }
     }
@@ -5706,7 +5720,7 @@
             fibers = {};
             fiberId = 0;
             count = 0;
-            return function(error3) {
+            return function(error4) {
               return new Aff2(SYNC, function() {
                 for (var k2 in kills) {
                   if (kills.hasOwnProperty(k2)) {
@@ -5976,7 +5990,7 @@
           };
         };
       }
-      function kill2(error3, cb) {
+      function kill2(error4, cb) {
         return function() {
           if (status2 === COMPLETED) {
             cb(util.right(void 0))();
@@ -5991,18 +6005,18 @@
           })();
           switch (status2) {
             case SUSPENDED:
-              interrupt = util.left(error3);
+              interrupt = util.left(error4);
               status2 = COMPLETED;
               step3 = interrupt;
               run3(runTick);
               break;
             case PENDING:
               if (interrupt === null) {
-                interrupt = util.left(error3);
+                interrupt = util.left(error4);
               }
               if (bracketCount === 0) {
                 if (status2 === PENDING) {
-                  attempts = new Aff2(CONS, new Aff2(FINALIZER, step3(error3)), attempts, interrupt);
+                  attempts = new Aff2(CONS, new Aff2(FINALIZER, step3(error4)), attempts, interrupt);
                 }
                 status2 = RETURN;
                 step3 = null;
@@ -6012,7 +6026,7 @@
               break;
             default:
               if (interrupt === null) {
-                interrupt = util.left(error3);
+                interrupt = util.left(error4);
               }
               if (bracketCount === 0) {
                 status2 = RETURN;
@@ -6063,7 +6077,7 @@
       var early = new Error("[ParAff] Early exit");
       var interrupt = null;
       var root = EMPTY;
-      function kill2(error3, par2, cb2) {
+      function kill2(error4, par2, cb2) {
         var step3 = par2;
         var head3 = null;
         var tail2 = null;
@@ -6077,7 +6091,7 @@
               case FORKED:
                 if (step3._3 === EMPTY) {
                   tmp = fibers[step3._1];
-                  kills2[count++] = tmp.kill(error3, function(result) {
+                  kills2[count++] = tmp.kill(error4, function(result) {
                     return function() {
                       count--;
                       if (count === 0) {
@@ -6311,8 +6325,8 @@
           fibers[fid].run();
         }
       }
-      function cancel(error3, cb2) {
-        interrupt = util.left(error3);
+      function cancel(error4, cb2) {
+        interrupt = util.left(error4);
         var innerKills;
         for (var kid in kills) {
           if (kills.hasOwnProperty(kid)) {
@@ -6325,7 +6339,7 @@
           }
         }
         kills = null;
-        var newKills = kill2(error3, root, cb2);
+        var newKills = kill2(error4, root, cb2);
         return function(killError) {
           return new Aff2(ASYNC, function(killCb) {
             return function() {
@@ -7194,14 +7208,14 @@
         return function(label5) {
           return function(p2) {
             return function(comp) {
-              return function(input2) {
+              return function(input3) {
                 return function(output2) {
                   return mkComponentSlot({
                     get: lookup23(label5)(p2),
                     pop: pop22(label5)(p2),
                     set: insert22(label5)(p2),
                     component: comp,
-                    input: input2,
+                    input: input3,
                     output: output2
                   });
                 };
@@ -7217,15 +7231,15 @@
   var element2 = /* @__PURE__ */ function() {
     return element(Nothing.value);
   }();
-  var h1 = /* @__PURE__ */ element2("h1");
-  var h1_ = /* @__PURE__ */ h1([]);
   var img = function(props) {
     return element2("img")(props)([]);
   };
   var div2 = /* @__PURE__ */ element2("div");
+  var button = /* @__PURE__ */ element2("button");
   var a = /* @__PURE__ */ element2("a");
 
   // output/Halogen.HTML.Properties/index.js
+  var unwrap2 = /* @__PURE__ */ unwrap();
   var prop2 = function(dictIsProp) {
     return prop(dictIsProp);
   };
@@ -7235,6 +7249,14 @@
   var width = /* @__PURE__ */ prop3("width");
   var href = /* @__PURE__ */ prop22("href");
   var height = /* @__PURE__ */ prop3("height");
+  var classes = /* @__PURE__ */ function() {
+    var $32 = prop22("className");
+    var $33 = joinWith(" ");
+    var $34 = map(functorArray)(unwrap2);
+    return function($35) {
+      return $32($33($34($35)));
+    };
+  }();
   var attr2 = /* @__PURE__ */ function() {
     return attr(Nothing.value);
   }();
@@ -7301,8 +7323,8 @@
         return function(label5) {
           return function(p2) {
             return function(component4) {
-              return function(input2) {
-                return widget(new ComponentSlot(componentSlot22(label5)(p2)(component4)(input2)($$const(Nothing.value))));
+              return function(input3) {
+                return widget(new ComponentSlot(componentSlot22(label5)(p2)(component4)(input3)($$const(Nothing.value))));
               };
             };
           };
@@ -7563,6 +7585,100 @@
     }
   };
 
+  // output/Data.Show.Generic/foreign.js
+  var intercalate4 = function(separator) {
+    return function(xs) {
+      return xs.join(separator);
+    };
+  };
+
+  // output/Data.Show.Generic/index.js
+  var append5 = /* @__PURE__ */ append(semigroupArray);
+  var genericShowArgsNoArguments = {
+    genericShowArgs: function(v) {
+      return [];
+    }
+  };
+  var genericShowArgsArgument = function(dictShow) {
+    var show5 = show(dictShow);
+    return {
+      genericShowArgs: function(v) {
+        return [show5(v)];
+      }
+    };
+  };
+  var genericShowArgs = function(dict) {
+    return dict.genericShowArgs;
+  };
+  var genericShowConstructor = function(dictGenericShowArgs) {
+    var genericShowArgs1 = genericShowArgs(dictGenericShowArgs);
+    return function(dictIsSymbol) {
+      var reflectSymbol2 = reflectSymbol(dictIsSymbol);
+      return {
+        "genericShow'": function(v) {
+          var ctor = reflectSymbol2($$Proxy.value);
+          var v1 = genericShowArgs1(v);
+          if (v1.length === 0) {
+            return ctor;
+          }
+          ;
+          return "(" + (intercalate4(" ")(append5([ctor])(v1)) + ")");
+        }
+      };
+    };
+  };
+  var genericShow$prime = function(dict) {
+    return dict["genericShow'"];
+  };
+  var genericShowSum = function(dictGenericShow) {
+    var genericShow$prime1 = genericShow$prime(dictGenericShow);
+    return function(dictGenericShow1) {
+      var genericShow$prime2 = genericShow$prime(dictGenericShow1);
+      return {
+        "genericShow'": function(v) {
+          if (v instanceof Inl) {
+            return genericShow$prime1(v.value0);
+          }
+          ;
+          if (v instanceof Inr) {
+            return genericShow$prime2(v.value0);
+          }
+          ;
+          throw new Error("Failed pattern match at Data.Show.Generic (line 26, column 1 - line 28, column 40): " + [v.constructor.name]);
+        }
+      };
+    };
+  };
+  var genericShow = function(dictGeneric) {
+    var from3 = from(dictGeneric);
+    return function(dictGenericShow) {
+      var genericShow$prime1 = genericShow$prime(dictGenericShow);
+      return function(x) {
+        return genericShow$prime1(from3(x));
+      };
+    };
+  };
+
+  // output/Effect.Console/foreign.js
+  var log2 = function(s) {
+    return function() {
+      console.log(s);
+    };
+  };
+  var warn = function(s) {
+    return function() {
+      console.warn(s);
+    };
+  };
+
+  // output/Effect.Class.Console/index.js
+  var log3 = function(dictMonadEffect) {
+    var $67 = liftEffect(dictMonadEffect);
+    return function($68) {
+      return $67(log2($68));
+    };
+  };
+
   // output/Data.String.CaseInsensitive/index.js
   var compare2 = /* @__PURE__ */ compare(ordString);
   var CaseInsensitiveString = function(x) {
@@ -7668,7 +7784,7 @@
       return function() {
         return function() {
           return function(dictIsSymbol) {
-            var $$delete5 = $$delete3(dictIsSymbol)()();
+            var $$delete6 = $$delete3(dictIsSymbol)()();
             var get4 = get(dictIsSymbol)();
             var insert8 = insert3(dictIsSymbol)()();
             return function(dictToCoreRequestOptionsHelper) {
@@ -7678,7 +7794,7 @@
                   return {
                     convertHelper: function(v) {
                       return function(r) {
-                        var tail2 = convertHelper1($$Proxy.value)($$delete5($$Proxy.value)(r));
+                        var tail2 = convertHelper1($$Proxy.value)($$delete6($$Proxy.value)(r));
                         var head3 = convertImpl1($$Proxy.value)(get4($$Proxy.value)(r));
                         return insert8($$Proxy.value)(head3)(tail2);
                       };
@@ -7751,9 +7867,9 @@
   }
 
   // output/Control.Monad.Except/index.js
-  var unwrap2 = /* @__PURE__ */ unwrap();
+  var unwrap3 = /* @__PURE__ */ unwrap();
   var runExcept = function($3) {
-    return unwrap2(runExceptT($3));
+    return unwrap3(runExceptT($3));
   };
 
   // output/Promise.Internal/foreign.js
@@ -7936,11 +8052,11 @@
 
   // output/Web.HTML.HTMLDocument.ReadyState/index.js
   var Loading = /* @__PURE__ */ function() {
-    function Loading2() {
+    function Loading3() {
     }
     ;
-    Loading2.value = new Loading2();
-    return Loading2;
+    Loading3.value = new Loading3();
+    return Loading3;
   }();
   var Interactive = /* @__PURE__ */ function() {
     function Interactive2() {
@@ -8003,10 +8119,28 @@
     return _read(Nothing.value, Just.create, x);
   };
 
+  // output/Web.HTML.History/foreign.js
+  function replaceState(a2) {
+    return function(docTitle) {
+      return function(url3) {
+        return function(history2) {
+          return function() {
+            return history2.replaceState(a2, docTitle, url3);
+          };
+        };
+      };
+    };
+  }
+
   // output/Web.HTML.Window/foreign.js
   function document(window2) {
     return function() {
       return window2.document;
+    };
+  }
+  function history(window2) {
+    return function() {
+      return window2.history;
     };
   }
 
@@ -8060,6 +8194,25 @@
     });
   });
 
+  // output/Web.UIEvent.MouseEvent.EventTypes/index.js
+  var click2 = "click";
+
+  // output/Halogen.HTML.Events/index.js
+  var mouseHandler = unsafeCoerce2;
+  var handler2 = function(et) {
+    return function(f) {
+      return handler(et)(function(ev) {
+        return new Just(new Action(f(ev)));
+      });
+    };
+  };
+  var onClick = /* @__PURE__ */ function() {
+    var $15 = handler2(click2);
+    return function($16) {
+      return $15(mouseHandler($16));
+    };
+  }();
+
   // output/Control.Monad.Fork.Class/index.js
   var monadForkAff = {
     suspend: suspendAff,
@@ -8074,13 +8227,6 @@
   };
   var fork = function(dict) {
     return dict.fork;
-  };
-
-  // output/Effect.Console/foreign.js
-  var warn = function(s) {
-    return function() {
-      console.warn(s);
-    };
   };
 
   // output/Halogen.Aff.Driver.State/index.js
@@ -8109,14 +8255,14 @@
     };
   };
   var initDriverState = function(component4) {
-    return function(input2) {
-      return function(handler2) {
+    return function(input3) {
+      return function(handler3) {
         return function(lchs) {
           return function __do2() {
             var selfRef = $$new({})();
             var childrenIn = $$new(empty4)();
             var childrenOut = $$new(empty4)();
-            var handlerRef = $$new(handler2)();
+            var handlerRef = $$new(handler3)();
             var pendingQueries = $$new(new Just(Nil.value))();
             var pendingOuts = $$new(new Just(Nil.value))();
             var pendingHandlers = $$new(Nothing.value)();
@@ -8125,7 +8271,7 @@
             var forks = $$new(empty3)();
             var ds = {
               component: component4,
-              state: component4.initialState(input2),
+              state: component4.initialState(input3),
               refs: empty3,
               children: empty4,
               childrenIn,
@@ -8328,8 +8474,8 @@
             ;
             if (v1 instanceof Raise) {
               return bind12(liftEffect6(read(ref2)))(function(v2) {
-                return bind12(liftEffect6(read(v2.handlerRef)))(function(handler2) {
-                  return discard1(queueOrRun(v2.pendingOuts)(handler2(v1.value0)))(function() {
+                return bind12(liftEffect6(read(v2.handlerRef)))(function(handler3) {
+                  return discard1(queueOrRun(v2.pendingOuts)(handler3(v1.value0)))(function() {
                     return pure9(v1.value1);
                   });
                 });
@@ -8512,12 +8658,12 @@
           };
         };
         var runComponent = function(lchs) {
-          return function(handler2) {
+          return function(handler3) {
             return function(j) {
               return unComponent(function(c) {
                 return function __do2() {
                   var lchs$prime = newLifecycleHandlers();
-                  var $$var2 = initDriverState(c)(j)(handler2)(lchs$prime)();
+                  var $$var2 = initDriverState(c)(j)(handler3)(lchs$prime)();
                   var pre2 = read(lchs)();
                   write({
                     initializers: Nil.value,
@@ -8539,7 +8685,7 @@
           };
         };
         var renderChild = function(lchs) {
-          return function(handler2) {
+          return function(handler3) {
             return function(childrenInRef) {
               return function(childrenOutRef) {
                 return unComponentSlot(function(slot) {
@@ -8552,7 +8698,7 @@
                         unDriverStateX(function(st) {
                           return function __do3() {
                             flip(write)(st.handlerRef)(function() {
-                              var $65 = maybe(pure13(unit))(handler2);
+                              var $65 = maybe(pure13(unit))(handler3);
                               return function($66) {
                                 return $65(slot.output($66));
                               };
@@ -8565,7 +8711,7 @@
                       ;
                       if (childrenIn instanceof Nothing) {
                         return runComponent(lchs)(function() {
-                          var $67 = maybe(pure13(unit))(handler2);
+                          var $67 = maybe(pure13(unit))(handler3);
                           return function($68) {
                             return $67(slot.output($68));
                           };
@@ -8604,7 +8750,7 @@
               when3(shouldProcessHandlers)(write(new Just(Nil.value))(v.pendingHandlers))();
               write(empty4)(v.childrenOut)();
               write(v.children)(v.childrenIn)();
-              var handler2 = function() {
+              var handler3 = function() {
                 var $70 = queueOrRun(v.pendingHandlers);
                 var $71 = evalF(render)(v.selfRef);
                 return function($72) {
@@ -8614,11 +8760,11 @@
               var childHandler = function() {
                 var $73 = queueOrRun(v.pendingQueries);
                 return function($74) {
-                  return $73(handler2(Action.create($74)));
+                  return $73(handler3(Action.create($74)));
                 };
               }();
               var rendering = renderSpec2.render(function($75) {
-                return handleAff(handler2($75));
+                return handleAff(handler3($75));
               })(renderChild(lchs)(childHandler)(v.childrenIn)(v.childrenOut))(v.component.render(v.state))(v.rendering)();
               var children2 = read(v.childrenOut)();
               var childrenIn = read(v.childrenIn)();
@@ -8825,7 +8971,7 @@
   var $$void7 = /* @__PURE__ */ $$void(functorEffect);
   var pure11 = /* @__PURE__ */ pure(applicativeEffect);
   var traverse_6 = /* @__PURE__ */ traverse_(applicativeEffect)(foldableMaybe);
-  var unwrap3 = /* @__PURE__ */ unwrap();
+  var unwrap4 = /* @__PURE__ */ unwrap();
   var when4 = /* @__PURE__ */ when(applicativeEffect);
   var not2 = /* @__PURE__ */ not(/* @__PURE__ */ heytingAlgebraFunction(/* @__PURE__ */ heytingAlgebraFunction(heytingAlgebraBoolean)));
   var identity9 = /* @__PURE__ */ identity(categoryFn);
@@ -8856,7 +9002,7 @@
       })(npn)();
     };
   };
-  var mkSpec = function(handler2) {
+  var mkSpec = function(handler3) {
     return function(renderChildRef) {
       return function(document2) {
         var getNode = unRenderStateX(function(v) {
@@ -8870,7 +9016,7 @@
           return unit;
         };
         var buildWidget2 = function(spec) {
-          var buildThunk2 = buildThunk(unwrap3)(spec);
+          var buildThunk2 = buildThunk(unwrap4)(spec);
           var $lazy_patch = $runtime_lazy8("patch", "Halogen.VDom.Driver", function() {
             return function(st, slot) {
               if (st instanceof Just) {
@@ -8917,7 +9063,7 @@
           var renderComponentSlot = $lazy_renderComponentSlot(109);
           return render;
         };
-        var buildAttributes = buildProp(handler2);
+        var buildAttributes = buildProp(handler3);
         return {
           buildWidget: buildWidget2,
           buildAttributes,
@@ -8928,14 +9074,14 @@
   };
   var renderSpec = function(document2) {
     return function(container) {
-      var render = function(handler2) {
+      var render = function(handler3) {
         return function(child) {
           return function(v) {
             return function(v1) {
               if (v1 instanceof Nothing) {
                 return function __do2() {
                   var renderChildRef = $$new(child)();
-                  var spec = mkSpec(handler2)(renderChildRef)(document2);
+                  var spec = mkSpec(handler3)(renderChildRef)(document2);
                   var machine = buildVDom(spec)(v);
                   var node = extract2(machine);
                   $$void7(appendChild(node)(toNode2(container)))();
@@ -9014,8 +9160,18 @@
       };
     };
   }
+  function href5(url3) {
+    return url3.href;
+  }
   function searchParams(url3) {
     return url3.searchParams;
+  }
+  function setSearch2(v) {
+    return function(url3) {
+      var u2 = new URL(url3);
+      u2.search = v;
+      return u2;
+    };
   }
 
   // output/Web.URL/index.js
@@ -9024,6 +9180,13 @@
   };
 
   // output/Web.URL.URLSearchParams/foreign.js
+  function deleteImpl2(name15) {
+    return function(p2) {
+      var n = new URLSearchParams(p2);
+      n.delete(name15);
+      return n;
+    };
+  }
   function getImpl(just) {
     return function(nothing) {
       return function(name15) {
@@ -9038,34 +9201,54 @@
       };
     };
   }
+  function setImpl(name15) {
+    return function(value12) {
+      return function(p2) {
+        var n = new URLSearchParams(p2);
+        n.set(name15, value12);
+        return n;
+      };
+    };
+  }
+  function toStringImpl(p2) {
+    return p2.toString();
+  }
 
   // output/Web.URL.URLSearchParams/index.js
+  var toString10 = toStringImpl;
+  var set = setImpl;
   var get3 = /* @__PURE__ */ function() {
     return getImpl(Just.create)(Nothing.value);
   }();
+  var $$delete5 = deleteImpl2;
 
   // output/ComponentIndex/index.js
+  var genericShowConstructor2 = /* @__PURE__ */ genericShowConstructor(genericShowArgsNoArguments);
+  var fold4 = /* @__PURE__ */ fold(foldableArray)(monoidArray);
   var mapFlipped2 = /* @__PURE__ */ mapFlipped(functorArray);
-  var show4 = /* @__PURE__ */ show(showPageId);
-  var show12 = /* @__PURE__ */ show(showString);
+  var show4 = /* @__PURE__ */ show(showString);
+  var show12 = /* @__PURE__ */ show(showPageId);
   var slot_3 = /* @__PURE__ */ slot_()({
     reflectSymbol: function() {
       return "page";
     }
   })(ordUnit);
-  var bind9 = /* @__PURE__ */ bind(bindHalogenM);
-  var liftEffect9 = /* @__PURE__ */ liftEffect(/* @__PURE__ */ monadEffectHalogenM(monadEffectAff));
   var discard7 = /* @__PURE__ */ discard(discardUnit)(bindHalogenM);
+  var monadEffectHalogenM2 = /* @__PURE__ */ monadEffectHalogenM(monadEffectAff);
+  var log4 = /* @__PURE__ */ log3(monadEffectHalogenM2);
+  var bind9 = /* @__PURE__ */ bind(bindHalogenM);
+  var liftEffect9 = /* @__PURE__ */ liftEffect(monadEffectHalogenM2);
   var liftAff2 = /* @__PURE__ */ liftAff(/* @__PURE__ */ monadAffHalogenM(monadAffAff));
   var fetch3 = /* @__PURE__ */ fetch2()()(/* @__PURE__ */ toCoreRequestOptionsRowRo()()(/* @__PURE__ */ toCoreRequestOptionsHelpe1(toCoreRequestOptionsConve9)()()()({
     reflectSymbol: function() {
       return "method";
     }
   })(toCoreRequestOptionsHelpe)()()));
-  var modify_3 = /* @__PURE__ */ modify_2(monadStateHalogenM);
-  var fromJsonString2 = /* @__PURE__ */ fromJsonString(/* @__PURE__ */ decodeArray2(decodeJsonPageId));
+  var fromJsonString2 = /* @__PURE__ */ fromJsonString(decodeJsonPage);
+  var fromJsonString1 = /* @__PURE__ */ fromJsonString(/* @__PURE__ */ decodeArray2(decodeJsonPageId));
   var show22 = /* @__PURE__ */ show(showJsonDecodeError);
-  var fromJsonString1 = /* @__PURE__ */ fromJsonString(decodeJsonPage);
+  var modify_3 = /* @__PURE__ */ modify_2(monadStateHalogenM);
+  var wrap3 = /* @__PURE__ */ wrap();
   var pure14 = /* @__PURE__ */ pure(applicativeHalogenM);
   var Blank = /* @__PURE__ */ function() {
     function Blank2() {
@@ -9137,6 +9320,16 @@
     };
     return MiscError2;
   }();
+  var Loading2 = /* @__PURE__ */ function() {
+    function Loading3(value0) {
+      this.value0 = value0;
+    }
+    ;
+    Loading3.create = function(value0) {
+      return new Loading3(value0);
+    };
+    return Loading3;
+  }();
   var Initialize2 = /* @__PURE__ */ function() {
     function Initialize3() {
     }
@@ -9144,206 +9337,347 @@
     Initialize3.value = new Initialize3();
     return Initialize3;
   }();
+  var Update = /* @__PURE__ */ function() {
+    function Update2() {
+    }
+    ;
+    Update2.value = new Update2();
+    return Update2;
+  }();
+  var SetPage = /* @__PURE__ */ function() {
+    function SetPage2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    SetPage2.create = function(value0) {
+      return new SetPage2(value0);
+    };
+    return SetPage2;
+  }();
+  var GotoArchive = /* @__PURE__ */ function() {
+    function GotoArchive2() {
+    }
+    ;
+    GotoArchive2.value = new GotoArchive2();
+    return GotoArchive2;
+  }();
+  var SetStatus = /* @__PURE__ */ function() {
+    function SetStatus2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    SetStatus2.create = function(value0) {
+      return new SetStatus2(value0);
+    };
+    return SetStatus2;
+  }();
+  var showStatus = {
+    show: function(v) {
+      if (v instanceof Blank) {
+        return "Blank";
+      }
+      ;
+      if (v instanceof Archive) {
+        return "Archive";
+      }
+      ;
+      if (v instanceof InvalidPageId) {
+        return "InvalidPageId";
+      }
+      ;
+      if (v instanceof UnknownPageId) {
+        return "UnknownPageId";
+      }
+      ;
+      if (v instanceof InvalidPageJson) {
+        return "InvalidPageJson";
+      }
+      ;
+      if (v instanceof ValidPage) {
+        return "ValidPage";
+      }
+      ;
+      if (v instanceof MiscError) {
+        return "MiscError";
+      }
+      ;
+      if (v instanceof Loading2) {
+        return "Loading";
+      }
+      ;
+      throw new Error("Failed pattern match at ComponentIndex (line 80, column 1 - line 88, column 31): " + [v.constructor.name]);
+    }
+  };
+  var genericAction_ = {
+    to: function(x) {
+      if (x instanceof Inl) {
+        return Initialize2.value;
+      }
+      ;
+      if (x instanceof Inr && x.value0 instanceof Inl) {
+        return Update.value;
+      }
+      ;
+      if (x instanceof Inr && (x.value0 instanceof Inr && x.value0.value0 instanceof Inl)) {
+        return new SetPage(x.value0.value0.value0);
+      }
+      ;
+      if (x instanceof Inr && (x.value0 instanceof Inr && (x.value0.value0 instanceof Inr && x.value0.value0.value0 instanceof Inl))) {
+        return GotoArchive.value;
+      }
+      ;
+      if (x instanceof Inr && (x.value0 instanceof Inr && (x.value0.value0 instanceof Inr && x.value0.value0.value0 instanceof Inr))) {
+        return new SetStatus(x.value0.value0.value0.value0);
+      }
+      ;
+      throw new Error("Failed pattern match at ComponentIndex (line 62, column 1 - line 62, column 33): " + [x.constructor.name]);
+    },
+    from: function(x) {
+      if (x instanceof Initialize2) {
+        return new Inl(NoArguments.value);
+      }
+      ;
+      if (x instanceof Update) {
+        return new Inr(new Inl(NoArguments.value));
+      }
+      ;
+      if (x instanceof SetPage) {
+        return new Inr(new Inr(new Inl(x.value0)));
+      }
+      ;
+      if (x instanceof GotoArchive) {
+        return new Inr(new Inr(new Inr(new Inl(NoArguments.value))));
+      }
+      ;
+      if (x instanceof SetStatus) {
+        return new Inr(new Inr(new Inr(new Inr(x.value0))));
+      }
+      ;
+      throw new Error("Failed pattern match at ComponentIndex (line 62, column 1 - line 62, column 33): " + [x.constructor.name]);
+    }
+  };
+  var genericShow2 = /* @__PURE__ */ genericShow(genericAction_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2({
+    reflectSymbol: function() {
+      return "Initialize";
+    }
+  }))(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2({
+    reflectSymbol: function() {
+      return "Update";
+    }
+  }))(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsArgument(showPageId))({
+    reflectSymbol: function() {
+      return "SetPage";
+    }
+  }))(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2({
+    reflectSymbol: function() {
+      return "GotoArchive";
+    }
+  }))(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsArgument(showStatus))({
+    reflectSymbol: function() {
+      return "SetStatus";
+    }
+  }))))));
+  var showAction = {
+    show: function(x) {
+      return genericShow2(x);
+    }
+  };
+  var show32 = /* @__PURE__ */ show(showAction);
   var component3 = /* @__PURE__ */ function() {
     var render = function(v) {
-      return div2([])(function() {
+      return div2([classes(["index"]), style("width: 100vw; display: flex; flex-direction: column; gap: 1em; align-items: center; margin: 1em 0; ")])(fold4([[div2([style("cursor: pointer; text-align: center; font-size: 2em; box-shadow: 0 0 0 1px violet; "), onClick($$const(GotoArchive.value))])([text("modular-blog-2")])], function() {
         if (v.status instanceof Blank) {
-          return [h1_([text("Blank")])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Blank")])];
         }
         ;
         if (v.status instanceof Archive) {
-          return [h1_([text("Archive")]), div2([])(mapFlipped2(v.status.value0)(function(v1) {
-            return a([href("?pageId=" + v1)])([text(show4(v1))]);
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Archive")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])(mapFlipped2(v.status.value0)(function(v1) {
+            return button([onClick($$const(new SetPage(v1)))])([text(v1)]);
           }))];
         }
         ;
         if (v.status instanceof InvalidPageId) {
-          return [h1_([text("Error")]), div2([])([text("invalid PageId: " + show12(v.status.value0))])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("invalid PageId: " + show4(v.status.value0))])];
         }
         ;
         if (v.status instanceof UnknownPageId) {
-          return [h1_([text("Error")]), div2([])([text("unknown PageId: " + show4(v.status.value0))])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("unknown PageId: " + show12(v.status.value0))])];
         }
         ;
         if (v.status instanceof InvalidPageJson) {
-          return [div2([])([h1_([text("Error")]), text("invalid Page JSON: " + v.status.value0)])];
+          return [div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), text("invalid Page JSON: " + v.status.value0)])];
         }
         ;
         if (v.status instanceof MiscError) {
-          return [h1_([text("Error")]), div2([])([text("miscellaneous error: " + v.status.value0)])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("miscellaneous error: " + v.status.value0)])];
         }
         ;
         if (v.status instanceof ValidPage) {
-          return [h1_([text(fromPageIdToString(v.status.value0))]), slot_3($$Proxy.value)(unit)(component2)({
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text(fromPageIdToString(v.status.value0))]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([slot_3($$Proxy.value)(unit)(component2)({
             page: v.status.value1
-          })];
+          })])];
         }
         ;
-        throw new Error("Failed pattern match at ComponentIndex (line 104, column 9 - line 135, column 14): " + [v.status.constructor.name]);
-      }());
+        if (v.status instanceof Loading2) {
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Loading")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text(v.status.value0)])];
+        }
+        ;
+        throw new Error("Failed pattern match at ComponentIndex (line 201, column 13 - line 267, column 18): " + [v.status.constructor.name]);
+      }()]));
     };
     var initialState = function(v) {
       return {
         status: Blank.value
       };
     };
-    var $$eval = mkEval({
-      handleQuery: defaultEval.handleQuery,
-      receive: defaultEval.receive,
-      finalize: defaultEval.finalize,
-      initialize: new Just(Initialize2.value),
-      handleAction: function(v1) {
-        return bind9(liftEffect9(function __do2() {
-          var window2 = windowImpl();
-          var document2 = document(window2)();
-          return url2(toDocument(document2))();
-        }))(function(url_str) {
-          var url3 = fromMaybe$prime(function(v2) {
-            return bug("impossible");
-          })(fromAbsolute(url_str));
-          var sp = searchParams(url3);
-          return discard7(function() {
-            var v2 = get3("pageId")(sp);
-            if (v2 instanceof Nothing) {
-              return bind9(liftAff2(fetch3("pageIds.json")({
-                method: GET2.value
-              })))(function(response) {
-                var $70 = !response.ok;
-                if ($70) {
-                  return modify_3(function(v32) {
-                    var $71 = {};
-                    for (var $72 in v32) {
-                      if ({}.hasOwnProperty.call(v32, $72)) {
-                        $71[$72] = v32[$72];
-                      }
-                      ;
-                    }
-                    ;
-                    $71.status = new MiscError("can't find pages.json");
-                    return $71;
-                  });
+    var handleAction = function(v) {
+      if (v instanceof Initialize2) {
+        return discard7(log4("[" + (show32(v) + "]")))(function() {
+          return handleAction(Update.value);
+        });
+      }
+      ;
+      if (v instanceof Update) {
+        return discard7(log4("[" + (show32(v) + "]")))(function() {
+          return bind9(liftEffect9(windowImpl))(function(window2) {
+            return bind9(liftEffect9(document(window2)))(function(document2) {
+              return bind9(liftEffect9(url2(toDocument(document2))))(function(url_str) {
+                var url3 = fromMaybe$prime(function(v12) {
+                  return bug("impossible");
+                })(fromAbsolute(url_str));
+                var sp = searchParams(url3);
+                var v1 = get3("pageId")(sp);
+                if (v1 instanceof Nothing) {
+                  return handleAction(GotoArchive.value);
                 }
                 ;
-                return bind9(liftAff2(response.text))(function(pageIds_str) {
-                  var v32 = fromJsonString2(pageIds_str);
-                  if (v32 instanceof Left) {
-                    return modify_3(function(v4) {
-                      var $75 = {};
-                      for (var $76 in v4) {
-                        if ({}.hasOwnProperty.call(v4, $76)) {
-                          $75[$76] = v4[$76];
-                        }
-                        ;
-                      }
-                      ;
-                      $75.status = new MiscError("error when decoding pageIds.json: " + show22(v32.value0));
-                      return $75;
-                    });
+                if (v1 instanceof Just) {
+                  var v2 = makePageId$prime(v1.value0);
+                  if (v2 instanceof Nothing) {
+                    return handleAction(new SetStatus(new InvalidPageId(v1.value0)));
                   }
                   ;
-                  if (v32 instanceof Right) {
-                    return modify_3(function(v4) {
-                      var $79 = {};
-                      for (var $80 in v4) {
-                        if ({}.hasOwnProperty.call(v4, $80)) {
-                          $79[$80] = v4[$80];
-                        }
-                        ;
-                      }
-                      ;
-                      $79.status = new Archive(v32.value0);
-                      return $79;
-                    });
+                  if (v2 instanceof Just) {
+                    return handleAction(new SetPage(v2.value0));
                   }
                   ;
-                  throw new Error("Failed pattern match at ComponentIndex (line 85, column 17 - line 87, column 74): " + [v32.constructor.name]);
-                });
+                  throw new Error("Failed pattern match at ComponentIndex (line 119, column 26 - line 121, column 53): " + [v2.constructor.name]);
+                }
+                ;
+                throw new Error("Failed pattern match at ComponentIndex (line 117, column 5 - line 121, column 53): " + [v1.constructor.name]);
               });
-            }
-            ;
-            if (v2 instanceof Just) {
-              var v3 = makePageId$prime(v2.value0);
-              if (v3 instanceof Nothing) {
-                return modify_3(function(v4) {
-                  var $84 = {};
-                  for (var $85 in v4) {
-                    if ({}.hasOwnProperty.call(v4, $85)) {
-                      $84[$85] = v4[$85];
-                    }
-                    ;
-                  }
-                  ;
-                  $84.status = new InvalidPageId(v2.value0);
-                  return $84;
-                });
-              }
-              ;
-              if (v3 instanceof Just) {
-                return bind9(liftAff2(fetch3(fromPageIdToJsonUrl(v3.value0))({
-                  method: GET2.value
-                })))(function(response) {
-                  var $87 = !response.ok;
-                  if ($87) {
-                    return modify_3(function(v4) {
-                      var $88 = {};
-                      for (var $89 in v4) {
-                        if ({}.hasOwnProperty.call(v4, $89)) {
-                          $88[$89] = v4[$89];
-                        }
-                        ;
-                      }
-                      ;
-                      $88.status = new UnknownPageId(v3.value0);
-                      return $88;
-                    });
-                  }
-                  ;
-                  return bind9(liftAff2(response.text))(function(page_str) {
-                    var v4 = fromJsonString1(page_str);
-                    if (v4 instanceof Left) {
-                      return modify_3(function(v5) {
-                        var $92 = {};
-                        for (var $93 in v5) {
-                          if ({}.hasOwnProperty.call(v5, $93)) {
-                            $92[$93] = v5[$93];
-                          }
-                          ;
-                        }
-                        ;
-                        $92.status = new InvalidPageJson(printJsonDecodeError(v4.value0));
-                        return $92;
-                      });
-                    }
-                    ;
-                    if (v4 instanceof Right) {
-                      return modify_3(function(v5) {
-                        var $96 = {};
-                        for (var $97 in v5) {
-                          if ({}.hasOwnProperty.call(v5, $97)) {
-                            $96[$97] = v5[$97];
-                          }
-                          ;
-                        }
-                        ;
-                        $96.status = new ValidPage(v3.value0, v4.value0);
-                        return $96;
-                      });
-                    }
-                    ;
-                    throw new Error("Failed pattern match at ComponentIndex (line 95, column 19 - line 97, column 79): " + [v4.constructor.name]);
-                  });
-                });
-              }
-              ;
-              throw new Error("Failed pattern match at ComponentIndex (line 88, column 32 - line 97, column 79): " + [v3.constructor.name]);
-            }
-            ;
-            throw new Error("Failed pattern match at ComponentIndex (line 79, column 11 - line 97, column 79): " + [v2.constructor.name]);
-          }())(function() {
-            return pure14(unit);
+            });
           });
         });
       }
+      ;
+      if (v instanceof SetPage) {
+        return discard7(log4("[" + (show32(v) + "]")))(function() {
+          return discard7(handleAction(new SetStatus(new Loading2("loading page " + (show12(v.value0) + " ...")))))(function() {
+            return bind9(liftAff2(fetch3(fromPageIdToJsonUrl(v.value0))({
+              method: GET2.value
+            })))(function(response) {
+              var $132 = !response.ok;
+              if ($132) {
+                return handleAction(new SetStatus(new UnknownPageId(v.value0)));
+              }
+              ;
+              return bind9(liftAff2(response.text))(function(page_str) {
+                var v1 = fromJsonString2(page_str);
+                if (v1 instanceof Left) {
+                  return handleAction(new SetStatus(new InvalidPageJson(printJsonDecodeError(v1.value0))));
+                }
+                ;
+                if (v1 instanceof Right) {
+                  return handleAction(new SetStatus(new ValidPage(v.value0, v1.value0)));
+                }
+                ;
+                throw new Error("Failed pattern match at ComponentIndex (line 130, column 7 - line 132, column 71): " + [v1.constructor.name]);
+              });
+            });
+          });
+        });
+      }
+      ;
+      if (v instanceof GotoArchive) {
+        return discard7(log4("[" + (show32(v) + "]")))(function() {
+          return discard7(handleAction(new SetStatus(new Loading2("loading archive ..."))))(function() {
+            return bind9(liftAff2(fetch3("pageIds.json")({
+              method: GET2.value
+            })))(function(response) {
+              var $137 = !response.ok;
+              if ($137) {
+                return handleAction(new SetStatus(new MiscError("can't find pages.json")));
+              }
+              ;
+              return bind9(liftAff2(response.text))(function(pageIds_str) {
+                var v1 = fromJsonString1(pageIds_str);
+                if (v1 instanceof Left) {
+                  return handleAction(new SetStatus(new MiscError("error when decoding pageIds.json: " + show22(v1.value0))));
+                }
+                ;
+                if (v1 instanceof Right) {
+                  return handleAction(new SetStatus(new Archive(v1.value0)));
+                }
+                ;
+                throw new Error("Failed pattern match at ComponentIndex (line 158, column 7 - line 160, column 68): " + [v1.constructor.name]);
+              });
+            });
+          });
+        });
+      }
+      ;
+      if (v instanceof SetStatus) {
+        return discard7(log4("[" + (show32(v) + "]")))(function() {
+          return discard7(modify_3(function(v1) {
+            var $141 = {};
+            for (var $142 in v1) {
+              if ({}.hasOwnProperty.call(v1, $142)) {
+                $141[$142] = v1[$142];
+              }
+              ;
+            }
+            ;
+            $141.status = v.value0;
+            return $141;
+          }))(function() {
+            return bind9(liftEffect9(windowImpl))(function(window2) {
+              return bind9(liftEffect9(document(window2)))(function(document2) {
+                return bind9(liftEffect9(url2(toDocument(document2))))(function(url_str) {
+                  var url3 = fromMaybe$prime(function(v1) {
+                    return bug("impossible");
+                  })(fromAbsolute(url_str));
+                  var sp = searchParams(url3);
+                  return bind9(liftEffect9(history(window2)))(function(history2) {
+                    if (v.value0 instanceof Archive) {
+                      var sp$prime = $$delete5("pageId")(sp);
+                      var url$prime = setSearch2(toString10(sp$prime))(url3);
+                      return liftEffect9(replaceState(unsafeToForeign(""))(wrap3("TODO: document title"))(wrap3(href5(url$prime)))(history2));
+                    }
+                    ;
+                    if (v.value0 instanceof ValidPage) {
+                      var sp$prime = set("pageId")(fromPageIdToString(v.value0.value0))(sp);
+                      var url$prime = setSearch2(toString10(sp$prime))(url3);
+                      return liftEffect9(replaceState(unsafeToForeign(""))(wrap3("TODO: document title"))(wrap3(href5(url$prime)))(history2));
+                    }
+                    ;
+                    return pure14(unit);
+                  });
+                });
+              });
+            });
+          });
+        });
+      }
+      ;
+      throw new Error("Failed pattern match at ComponentIndex (line 106, column 3 - line 108, column 24): " + [v.constructor.name]);
+    };
+    var $$eval = mkEval({
+      handleQuery: defaultEval.handleQuery,
+      finalize: defaultEval.finalize,
+      initialize: new Just(Initialize2.value),
+      receive: $$const(new Just(Initialize2.value)),
+      handleAction
     });
     return mkComponent({
       initialState,

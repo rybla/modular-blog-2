@@ -9491,35 +9491,35 @@
         }
         ;
         if (v.status instanceof Archive) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Archive")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])(mapFlipped2(v.status.value0)(function(v1) {
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Archive")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])(mapFlipped2(v.status.value0)(function(v1) {
             return button([onClick($$const(new SetPage(v1)))])([text(v1)]);
           }))];
         }
         ;
         if (v.status instanceof InvalidPageId) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("invalid PageId: " + show4(v.status.value0))])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([text("invalid PageId: " + show4(v.status.value0))])];
         }
         ;
         if (v.status instanceof UnknownPageId) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("unknown PageId: " + show12(v.status.value0))])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([text("unknown PageId: " + show12(v.status.value0))])];
         }
         ;
         if (v.status instanceof InvalidPageJson) {
-          return [div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), text("invalid Page JSON: " + v.status.value0)])];
+          return [div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), text("invalid Page JSON: " + v.status.value0)])];
         }
         ;
         if (v.status instanceof MiscError) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text("miscellaneous error: " + v.status.value0)])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Error")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([text("miscellaneous error: " + v.status.value0)])];
         }
         ;
         if (v.status instanceof ValidPage) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text(fromPageIdToString(v.status.value0))]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([slot_3($$Proxy.value)(unit)(component2)({
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text(fromPageIdToString(v.status.value0))]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([slot_3($$Proxy.value)(unit)(component2)({
             page: v.status.value1
           })])];
         }
         ;
         if (v.status instanceof Loading2) {
-          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Loading")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; ")])([text(v.status.value0)])];
+          return [div2([style("text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; ")])([text("Loading")]), div2([style("display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; ")])([text(v.status.value0)])];
         }
         ;
         throw new Error("Failed pattern match at ComponentIndex (line 201, column 13 - line 267, column 18): " + [v.status.constructor.name]);

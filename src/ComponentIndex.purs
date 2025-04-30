@@ -186,7 +186,7 @@ component = mkComponent { initialState, eval, render }
       style_index = "width: 100vw; display: flex; flex-direction: column; gap: 1em; align-items: center; margin: 1em 0; "
       style_siteName = "cursor: pointer; text-align: center; font-size: 2em; box-shadow: 0 0 0 1px violet; "
       style_pageTitle = "text-align: center; font-size: 3em; box-shadow: 0 0 0 1px violet; "
-      style_content = "display: flex; flex-direction: column; gap: 1.0em; max-width: min(calc(100vw - 1em), 40em); box-shadow: 0 0 0 1px violet; "
+      style_content = "display: flex; flex-direction: column; gap: 1.0em; width: calc(100% - 2em); box-shadow: 0 0 0 1px violet; "
     in
       HH.div
         [ HP.classes [ HH.ClassName "index" ]
